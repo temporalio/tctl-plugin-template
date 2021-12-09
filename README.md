@@ -6,7 +6,7 @@ Use this template to quickly create a new CLI or [tctl](https://github.com/tempo
 
 Run `make build` to build the project
 
-The template shows an examples of:
+The template shows the examples of:
  
 - configuring a value 
 
