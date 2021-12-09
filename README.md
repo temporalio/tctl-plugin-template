@@ -27,6 +27,10 @@ In addition, it provides an easy access to
  - CLI kit https://github.com/temporalio/tctl-kit
  - Makefile to build and test your project
 
-## Running as tctl plugin
+## Running as a tctl plugin
 
-Place the resulting binary anywhere in $PATH and tctl will pick it up as a plugin
+Place the resulting binary anywhere in $PATH and tctl will pick it up as a plugin:
+
+```
+$ tctl my-plugin hello
+```
