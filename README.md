@@ -2,11 +2,9 @@
 
 Use this template to quickly create a new CLI or [tctl](https://github.com/temporalio/tctl) plugin
 
-## Build
+## Quick Start
 
 Run `make build` to build the project
-
-## Quick Start
 
 The template shows an examples of:
  
