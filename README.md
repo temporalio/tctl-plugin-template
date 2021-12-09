@@ -26,3 +26,7 @@ In addition, it provides an easy access to
  - Temporal SDK `temporalClient`
  - CLI kit https://github.com/temporalio/tctl-kit
  - Makefile to build and test your project
+
+## Running as tctl plugin
+
+Place the resulting binary anywhere in $PATH and tctl will pick it up as a plugin
