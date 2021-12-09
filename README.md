@@ -1,6 +1,6 @@
 # tctl-plugin-template
 
-Use this template to quickly create urfave/cli based CLI and/or [tctl](https://github.com/temporalio/tctl) plugin
+Use this template to quickly create a new CLI or [tctl](https://github.com/temporalio/tctl) plugin
 
 # Build
 
