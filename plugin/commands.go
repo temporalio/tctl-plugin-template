@@ -25,22 +25,29 @@
 package plugin
 
 import (
+	"context"
 	"fmt"
+	"time"
 
 	"github.com/urfave/cli/v2"
+
+	"github.com/temporalio/tctl-kit/pkg/output"
+	"go.temporal.io/api/workflowservice/v1"
+	"go.temporal.io/server/common/collection"
+	"go.temporal.io/server/common/rpc"
 )
 
 var commands = []*cli.Command{
 	{
 		Name:  "hello",
-		Usage: "Says hello",
+		Usage: "Say hello",
 		Action: func(c *cli.Context) error {
 			return SayHello(c)
 		},
 	},
 	{
 		Name:  "set-hello",
-		Usage: "Set hello value",
+		Usage: "Set hello value using config feature",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:     "value",
@@ -50,6 +57,13 @@ var commands = []*cli.Command{
 		},
 		Action: func(c *cli.Context) error {
 			return SetHelloValue(c)
+		},
+	},
+	{
+		Name:  "list",
+		Usage: "Print namespaces",
+		Action: func(c *cli.Context) error {
+			return List(c)
 		},
 	},
 }
@@ -67,6 +81,33 @@ func SayHello(c *cli.Context) error {
 	return nil
 }
 
+func List(c *cli.Context) error {
+	client := temporalFactory.SDKClient(c, "default")
+
+	paginationFunc := func(npt []byte) ([]interface{}, []byte, error) {
+		var items []interface{}
+		var err error
+		req := &workflowservice.ListNamespacesRequest{
+			NextPageToken: npt,
+		}
+		ctx, cancel := newContext(c)
+		defer cancel()
+		res, err := client.WorkflowService().ListNamespaces(ctx, req)
+		if err != nil {
+			return nil, nil, err
+		}
+
+		return items, res.GetNextPageToken(), nil
+	}
+
+	iter := collection.NewPagingIterator(paginationFunc)
+	opts := &output.PrintOptions{
+		Fields:     []string{"Execution.WorkflowId", "Execution.RunId", "StartTime"},
+		FieldsLong: []string{"Type.Name", "TaskQueue", "ExecutionTime", "CloseTime"},
+	}
+	return output.Pager(c, iter, opts)
+}
+
 // SayHello prints hello list
 func SetHelloValue(c *cli.Context) error {
 	value := c.String("value")
@@ -76,4 +117,10 @@ func SetHelloValue(c *cli.Context) error {
 	}
 
 	return nil
+}
+
+func newContext(c *cli.Context) (context.Context, context.CancelFunc) {
+	timeout := time.Duration(5) * time.Second
+
+	return rpc.NewContextWithTimeoutAndCLIHeaders(timeout)
 }
