@@ -1,5 +1,7 @@
 # tctl-plugin-template
 
+> **Nota bene**: The tctl plugin feature is still experimental and is not documented or officially supported. There are going to be some further changes & UX improvement
+
 Use this template to quickly create a new CLI or [tctl](https://github.com/temporalio/tctl) plugin
 
 ## Quick Start
