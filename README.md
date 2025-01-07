@@ -1,3 +1,12 @@
+**:warning: Deprecation Notice :warning:**
+
+The `tctl` CLI is now deprecated in favor of Temporal CLI. <br />
+This repository is no longer maintained. <br />
+Please use the new utility for all future development. <br />
+
+* New [Temporal CLI repository](https://github.com/temporalio/cli).
+* [Temporal CLI Documentation site](https://docs.temporal.io/cli).
+
 # tctl-plugin-template
 
 > **Nota bene**: The tctl plugin feature is still experimental and is not documented or officially supported. There are going to be some further changes & UX improvement
